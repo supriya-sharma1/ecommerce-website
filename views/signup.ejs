@@ -1,0 +1,16 @@
+<%- include('partials/header', { title: 'Sign up' }) %>
+
+<section class="form-card">
+  <h1>Create account</h1>
+  <form method="post" action="/signup" class="stack">
+    <label>Name <input type="text" name="name" required /></label>
+    <label>Email <input type="email" name="email" required /></label>
+    <label>Password <input type="password" name="password" minlength="6" required /></label>
+    <label>Phone <input type="tel" name="phone" /></label>
+    <label>Shipping address <textarea name="shippingAddress" rows="3"></textarea></label>
+    <label>Billing address <textarea name="billingAddress" rows="3"></textarea></label>
+    <button type="submit" class="primary">Sign up</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

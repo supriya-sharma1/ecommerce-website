@@ -1,0 +1,24 @@
+<%- include('partials/header', { title: product.name }) %>
+
+<section class="detail-layout">
+  <img src="<%= product.image_url %>" alt="<%= product.name %>" class="detail-image" />
+  <div>
+    <h1><%= product.name %></h1>
+    <p><%= product.description %></p>
+    <p class="price">$<%= formatPrice(product.price_cents) %></p>
+    <% if (currentUser) { %>
+      <form method="post" action="/cart/add" class="quantity-form">
+        <input type="hidden" name="productId" value="<%= product.id %>" />
+        <label>
+          Quantity
+          <input type="number" name="quantity" value="1" min="1" required />
+        </label>
+        <button type="submit" class="primary">Add to cart</button>
+      </form>
+    <% } else { %>
+      <a href="/login" class="primary button-link">Log in to buy</a>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

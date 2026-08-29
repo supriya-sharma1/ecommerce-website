@@ -1,0 +1,32 @@
+<%- include('partials/header', { title: 'Checkout' }) %>
+
+<h1>Checkout</h1>
+<p>We securely process card payments with Stripe. Card data never touches this app.</p>
+
+<section class="checkout-layout">
+  <form method="post" action="/checkout/create-session" class="form-card stack">
+    <h2>Profile & shipping</h2>
+    <label>Name <input type="text" name="name" value="<%= user.name || '' %>" required /></label>
+    <label>Email <input type="email" name="email" value="<%= user.email || '' %>" required /></label>
+    <label>Phone <input type="tel" name="phone" value="<%= user.phone || '' %>" /></label>
+    <label>Shipping address <textarea name="shippingAddress" rows="3" required><%= user.shipping_address || '' %></textarea></label>
+    <label>Billing address <textarea name="billingAddress" rows="3" required><%= user.billing_address || '' %></textarea></label>
+
+    <button type="submit" class="primary" <%= stripeConfigured ? '' : 'disabled' %>>Pay with Stripe</button>
+    <% if (!stripeConfigured) { %>
+      <p class="helper">Set <code>STRIPE_SECRET_KEY</code> in your .env file to enable payment.</p>
+    <% } %>
+  </form>
+
+  <aside class="summary">
+    <h2>Order summary</h2>
+    <ul>
+      <% items.forEach((item) => { %>
+        <li><span><%= item.name %> × <%= item.quantity %></span><strong>$<%= formatPrice(item.quantity * item.price_cents) %></strong></li>
+      <% }) %>
+    </ul>
+    <p class="price">Total: $<%= formatPrice(subtotalCents) %></p>
+  </aside>
+</section>
+
+<%- include('partials/footer') %>

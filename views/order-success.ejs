@@ -1,0 +1,20 @@
+<%- include('partials/header', { title: 'Order confirmed' }) %>
+
+<section class="form-card">
+  <h1>Order confirmed 🎉</h1>
+  <p>Thank you, <strong><%= order.name %></strong>. Your payment was successful.</p>
+  <p>Order #<%= order.id %> · Total $<%= formatPrice(order.total_amount_cents) %></p>
+
+  <h2>Items</h2>
+  <ul>
+    <% orderItems.forEach((item) => { %>
+      <li><%= item.name %> × <%= item.quantity %> — $<%= formatPrice(item.quantity * item.unit_price_cents) %></li>
+    <% }) %>
+  </ul>
+
+  <p>Shipping: <%= order.shipping_address %></p>
+  <p>Billing: <%= order.billing_address %></p>
+  <a href="/" class="primary button-link">Continue shopping</a>
+</section>
+
+<%- include('partials/footer') %>
