@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="h4">eSewa Payment (Ready Placeholder)</h1>
+    <p>This project is structured for eSewa integration. Replace placeholder values with merchant credentials in <code>.env</code>.</p>
+    <ul>
+      <li><strong>Order:</strong> #{{ order.id }}</li>
+      <li><strong>Amount:</strong> Rs. {{ order.total_amount }}</li>
+      <li><strong>Merchant ID:</strong> {{ merchant_id }}</li>
+      <li><strong>Success URL:</strong> {{ success_url }}</li>
+      <li><strong>Failure URL:</strong> {{ failure_url }}</li>
+    </ul>
+    <form method="post" action="{% url 'esewa_success' order.id %}">
+      {% csrf_token %}
+      <button class="btn btn-success">Simulate eSewa Success</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

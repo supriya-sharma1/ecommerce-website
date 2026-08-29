@@ -1,0 +1,20 @@
+body { background: #f5f7fb; }
+.hero-card { min-height: 360px; }
+.promo-banner { background: #fff3cd; border-bottom: 1px solid #f6e7a9; }
+.notification-stack {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1050;
+  display: grid;
+  gap: .5rem;
+  max-width: 320px;
+}
+.toast-notice {
+  background: #212529;
+  color: #fff;
+  border-radius: .5rem;
+  padding: .75rem 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,.2);
+}
+.card-img-top { height: 200px; object-fit: cover; }
