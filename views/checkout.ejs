@@ -5,6 +5,7 @@
 
 <section class="checkout-layout">
   <form method="post" action="/checkout/create-session" class="form-card stack">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <h2>Profile & shipping</h2>
     <label>Name <input type="text" name="name" value="<%= user.name || '' %>" required /></label>
     <label>Email <input type="email" name="email" value="<%= user.email || '' %>" required /></label>

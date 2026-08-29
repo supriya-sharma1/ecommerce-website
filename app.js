@@ -1,4 +1,5 @@
 const path = require('path');
+const crypto = require('crypto');
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
@@ -63,7 +64,36 @@ app.use(async (req, res, next) => {
   res.locals.flashMessage = req.session.message || null;
   req.session.message = null;
   res.locals.formatPrice = formatPrice;
+  if (!req.session.csrfToken) {
+    req.session.csrfToken = crypto.randomBytes(32).toString('hex');
+  }
+  res.locals.csrfToken = req.session.csrfToken;
   next();
+});
+
+app.use((req, res, next) => {
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+    return next();
+  }
+
+  const requestToken = req.body?._csrf || req.get('x-csrf-token');
+  const sessionToken = req.session.csrfToken;
+  if (!requestToken || !sessionToken) {
+    req.session.message = 'Your session expired. Please try again.';
+    return res.redirect(req.get('referer') || '/');
+  }
+
+  const requestTokenBuffer = Buffer.from(String(requestToken), 'utf8');
+  const sessionTokenBuffer = Buffer.from(String(sessionToken), 'utf8');
+  if (
+    requestTokenBuffer.length !== sessionTokenBuffer.length ||
+    !crypto.timingSafeEqual(requestTokenBuffer, sessionTokenBuffer)
+  ) {
+    req.session.message = 'Your session expired. Please try again.';
+    return res.redirect(req.get('referer') || '/');
+  }
+
+  return next();
 });
 
 app.get('/', async (req, res) => {

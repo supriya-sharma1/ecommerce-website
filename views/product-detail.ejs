@@ -8,6 +8,7 @@
     <p class="price">$<%= formatPrice(product.price_cents) %></p>
     <% if (currentUser) { %>
       <form method="post" action="/cart/add" class="quantity-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <input type="hidden" name="productId" value="<%= product.id %>" />
         <label>
           Quantity

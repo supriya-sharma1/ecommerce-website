@@ -13,6 +13,7 @@
           <h2><%= item.name %></h2>
           <p>$<%= formatPrice(item.price_cents) %> each</p>
           <form method="post" action="/cart/update" class="inline-fields">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <input type="hidden" name="productId" value="<%= item.product_id %>" />
             <label>Qty <input type="number" name="quantity" min="1" value="<%= item.quantity %>" required /></label>
             <button type="submit">Update</button>
@@ -21,6 +22,7 @@
         <div class="cart-actions">
           <p class="price">$<%= formatPrice(item.price_cents * item.quantity) %></p>
           <form method="post" action="/cart/remove">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <input type="hidden" name="productId" value="<%= item.product_id %>" />
             <button type="submit" class="danger">Remove</button>
           </form>

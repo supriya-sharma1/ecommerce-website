@@ -3,6 +3,7 @@
 <section class="form-card">
   <h1>Your profile</h1>
   <form method="post" action="/profile" class="stack">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <label>Name <input type="text" name="name" value="<%= user.name %>" required /></label>
     <label>Email <input type="email" name="email" value="<%= user.email %>" required /></label>
     <label>Phone <input type="tel" name="phone" value="<%= user.phone || '' %>" /></label>

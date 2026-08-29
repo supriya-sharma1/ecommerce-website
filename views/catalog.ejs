@@ -15,6 +15,7 @@
         <p class="price">$<%= formatPrice(product.price_cents) %></p>
         <% if (currentUser) { %>
           <form method="post" action="/cart/add">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <input type="hidden" name="productId" value="<%= product.id %>" />
             <input type="hidden" name="quantity" value="1" />
             <button type="submit" class="primary">Add to cart</button>
