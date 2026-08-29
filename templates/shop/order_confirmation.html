@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="h4">Order confirmed</h1>
+    <p>Thank you, {{ order.full_name }}. Your order #{{ order.id }} is {{ order.status }}.</p>
+    <p><strong>Payment:</strong> {{ order.get_payment_method_display }} ({{ order.get_payment_status_display }})</p>
+    <p><strong>Shipping address:</strong> {{ order.shipping_address }}</p>
+    <h2 class="h6 mt-3">Items</h2>
+    <ul>
+      {% for item in order.items.all %}
+        <li>{{ item.product_name }} × {{ item.quantity }} — Rs. {{ item.subtotal }}</li>
+      {% endfor %}
+    </ul>
+    <p class="fw-bold">Total: Rs. {{ order.total_amount }}</p>
+    <a href="{% url 'product_list' %}" class="btn btn-dark">Continue shopping</a>
+  </div>
+</div>
+{% endblock %}

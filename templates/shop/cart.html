@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Your Cart</h1>
+{% if cart_items %}
+<form method="post">
+  {% csrf_token %}
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead><tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr></thead>
+      <tbody>
+      {% for item in cart_items %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>Rs. {{ item.product.sale_price }}</td>
+          <td><input name="qty_{{ item.id }}" type="number" min="1" class="form-control" value="{{ item.quantity }}"></td>
+          <td>Rs. {{ item.subtotal }}</td>
+          <td><button class="btn btn-sm btn-outline-danger" type="submit" name="remove_item" value="{{ item.id }}">Remove</button></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-between">
+    <strong>Total: Rs. {{ total }}</strong>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-dark">Update cart</button>
+      <a class="btn btn-dark" href="{% url 'checkout' %}">Checkout</a>
+    </div>
+  </div>
+</form>
+{% else %}
+<p>Your cart is empty. <a href="{% url 'product_list' %}">Browse products</a></p>
+{% endif %}
+{% endblock %}

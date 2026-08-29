@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-5">
+    {% if product.image_url %}
+      <img src="{{ product.image_url }}" class="img-fluid rounded" alt="{{ product.name }}">
+    {% endif %}
+  </div>
+  <div class="col-md-7">
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.description }}</p>
+    <p>
+      {% if product.discount_percent > 0 %}
+        <span class="badge bg-danger">{{ product.discount_percent }}% OFF</span>
+        <span class="h4 text-success">Rs. {{ product.sale_price }}</span>
+        <small class="text-muted text-decoration-line-through">Rs. {{ product.price }}</small>
+      {% else %}
+        <span class="h4">Rs. {{ product.price }}</span>
+      {% endif %}
+    </p>
+    <form method="post" action="{% url 'add_to_cart' product.id %}">
+      {% csrf_token %}
+      <button class="btn btn-dark">Add to cart</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
